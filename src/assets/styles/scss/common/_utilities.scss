@@ -31,7 +31,9 @@
 .text-secondry-default {
 	color: $themeSecondryDefault;
 }
-
+.text-theme-danger {
+	color: $themeTextDanger;
+}
 //  ============> BACKGROUD COLOR'S <============
 .bg-static-white {
 	background-color: $themeWhiteColor;
@@ -47,7 +49,6 @@
 .font-10 {
 	font-size: $font-10;
 }
-
 .font-12 {
 	font-size: $font-12;
 }

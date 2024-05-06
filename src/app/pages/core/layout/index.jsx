@@ -8,7 +8,7 @@ export default function Layout() {
 		<div>
 			<>
 				<Header />
-				<Navbar />
+				{/* <Navbar /> */}
 				<Suspense fallback={"Loading..."}>
 					<Outlet />
 				</Suspense>

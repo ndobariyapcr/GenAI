@@ -1,9 +1,11 @@
 .header--section {
 	.navbar {
 		background-color: $themeColor;
+        
 	}
     .dropdown{
         position: relative;
+        margin-left: auto;
         .dropdown-toggle{
             svg{
                 width: 28px;

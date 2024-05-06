@@ -1,10 +1,36 @@
-import React from "react";
+import React, { useState } from "react";
 import PageHeader from "@/components/common/PageHeader";
-import { Col, Container, Row } from "react-bootstrap";
 import ReactChart from "@/components/ui/ReactChart";
 import ThemeTable from "@/components/ui/Tables/ThemeTable";
+import { Card, Col, Container, Row } from "react-bootstrap";
 import { Link } from "react-router-dom";
 import { themeConfig } from "@/configs";
+import ReactButton from "@/components/ui/ReactButton";
+import { Icon } from "@iconify/react";
+import AddNewItems from "./partials/AddNewItems";
+
+const columns = [
+	{
+		accessor: "title",
+		Header: "Title",
+	},
+	{
+		accessor: "status",
+		Header: "Status",
+	},
+	{
+		accessor: "priority",
+		Header: "Priority",
+	},
+	{
+		accessor: "dueDate",
+		Header: "Due Date",
+	},
+	{
+		accessor: "superHousehold",
+		Header: "Super Household",
+	},
+];
 
 const data = [
 	{
@@ -23,84 +49,138 @@ const data = [
 	},
 ];
 
+const options = {
+	chart: {
+		type: "column",
+	},
+	title: {
+		text: "Firm AUM",
+		align: "start",
+	},
+	xAxis: {
+		categories: ["USA", "China", "Brazil", "EU", "India", "Russia"],
+		crosshair: true,
+		accessibility: {
+			description: "Countries",
+		},
+	},
+	plotOptions: {
+		column: {
+			pointPadding: 0.2,
+			borderWidth: 0,
+		},
+	},
+	series: [
+		{
+			name: "Corn",
+			data: [406292, 260000, 107000, 68300, 27500, 14500],
+		},
+		{
+			name: "Wheat",
+			data: [51086, 136000, 5500, 141000, 107180, 77000],
+		},
+	],
+};
+
+const pieOptions = {
+	chart: {
+		type: "pie",
+	},
+	title: {
+		text: "Egg Yolk Composition",
+	},
+	plotOptions: {
+		series: {
+			allowPointSelect: true,
+			cursor: "pointer",
+			dataLabels: [
+				{
+					enabled: true,
+					distance: 20,
+				},
+				{
+					enabled: true,
+					distance: -40,
+					format: "{point.percentage:.1f}%",
+					style: {
+						fontSize: "1.2em",
+						textOutline: "none",
+						opacity: 0.7,
+					},
+					filter: {
+						operator: ">",
+						property: "percentage",
+						value: 10,
+					},
+				},
+			],
+		},
+	},
+	series: [
+		{
+			name: "Percentage",
+			colorByPoint: true,
+			data: [
+				{
+					name: "Water",
+					y: 55.02,
+				},
+				{
+					name: "Fat",
+					sliced: true,
+					selected: true,
+					y: 26.71,
+				},
+				{
+					name: "Carbohydrates",
+					y: 1.09,
+				},
+				{
+					name: "Protein",
+					y: 15.5,
+				},
+				{
+					name: "Ash",
+					y: 1.68,
+				},
+			],
+		},
+	],
+};
+
 export default function PalettePlatformPage() {
-	const options = {
-		chart: {
-			type: "column",
-		},
-		title: {
-			text: "Firm AUM",
-			align: "start",
-		},
-		xAxis: {
-			categories: ["USA", "China", "Brazil", "EU", "India", "Russia"],
-			crosshair: true,
-			accessibility: {
-				description: "Countries",
-			},
-		},
-		yAxis: {
-			min: 0,
-			title: {
-				text: "1000 metric tons (MT)",
-			},
-		},
-		tooltip: {
-			valueSuffix: " (1000 MT)",
-		},
-		plotOptions: {
-			column: {
-				pointPadding: 0.2,
-				borderWidth: 0,
-			},
-		},
-		series: [
-			{
-				name: "Corn",
-				data: [406292, 260000, 107000, 68300, 27500, 14500],
-			},
-			{
-				name: "Wheat",
-				data: [51086, 136000, 5500, 141000, 107180, 77000],
-			},
-		],
-	};
-
-	const columns = [
-		{
-			accessor: "title",
-			Header: "Title",
-		},
-		{
-			accessor: "status",
-			Header: "Status",
-		},
-		{
-			accessor: "priority",
-			Header: "Priority",
-		},
-		{
-			accessor: "dueDate",
-			Header: "Due Date",
-		},
-		{
-			accessor: "superHousehold",
-			Header: "Super Household",
-		},
-	];
-
+	const [isModalOpen, setIsModalOpen] = useState(false);
 	return (
 		<>
 			<PageHeader title="home" />
 			<Container fluid>
-				<Row>
+				<Row className="row-gap-3">
 					<Col xxl={3}>
 						<ReactChart options={options} />
 					</Col>
 					<Col xxl={9}>
-						<ThemeTable columns={columns} data={data} />
+						<Card className="">
+							<Card.Header as="div" className="d-flex align-items-center justify-content-between">
+								<Link to="#!" className="font-14 text-theme-color text-decoration-none">
+									My Open Tasks
+								</Link>
+								<ReactButton
+									onClick={() => {
+										setIsModalOpen(true);
+									}}
+									className="font-12 d-flex align-items-center gap-2"
+								>
+									<Icon icon="ic:round-plus" className="d-block font-16" /> Add new items
+								</ReactButton>
+							</Card.Header>
+							<Card.Body as="div">
+								<ThemeTable columns={columns} data={data} />
+							</Card.Body>
+						</Card>
 					</Col>
-					<Col xxl={3}>{/* <ReactChart options={options} /> */}</Col>
+					<Col xxl={3}>
+						<ReactChart options={pieOptions} />
+					</Col>
 					<Col xxl={9}>
 						<Row>
 							<Col xxl={4}>
@@ -130,6 +210,16 @@ export default function PalettePlatformPage() {
 					</Col>
 				</Row>
 			</Container>
+
+			<AddNewItems
+				isOpen={isModalOpen}
+				onClose={() => {
+					setIsModalOpen(false);
+				}}
+				onSave={() => {
+					setIsModalOpen(false);
+				}}
+			/>
 		</>
 	);
 }

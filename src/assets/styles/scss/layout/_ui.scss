@@ -1,9 +1,5 @@
 // ==========> {{ START:: Modal CSS }} <==========
 
-.highcharts-credits {
-	display: none;
-}
-
 .modal--body,
 .modal--footer,
 .help--modal {
@@ -25,6 +21,9 @@
 		}
 	}
 }
+.ReactModal__Content{
+    border: none !important;
+}
 
 // ==========> {{ END:: Modal CSS }} <==========
 
@@ -42,3 +41,51 @@
 }
 
 // ==========> {{ END:: Button CSS }} <==========
+
+// ==========> {{ START:: Chart CSS }} <==========
+
+.highcharts-credits,
+.highcharts-title {
+	display: none;
+}
+.chart--view-section {
+	padding: 12px;
+	border: 1px solid rgba(0, 0, 0, 0.2);
+	border-radius: 8px;
+	.heading--box {
+		padding: 4px 8px;
+		background-color: #f7f8fc;
+		button {
+			svg {
+				font-size: $font-18;
+			}
+		}
+	}
+}
+
+// ==========> {{ END:: Chart CSS }} <==========
+
+// ==========> {{ START:: Theme table CSS }} <==========
+
+.theme--table-wrap {
+	table {
+		thead {
+			tr {
+				th {
+					background-color: #4bc3ff;
+					font-size: $font-14;
+					color: #f2f2f2;
+				}
+			}
+		}
+		tbody {
+			tr {
+				td {
+					font-size: $font-14;
+				}
+			}
+		}
+	}
+}
+
+// ==========> {{ END:: Theme table CSS }} <==========

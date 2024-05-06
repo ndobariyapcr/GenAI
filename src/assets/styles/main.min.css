@@ -12980,6 +12980,10 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
   color: #999999;
 }
 
+.text-theme-danger {
+  color: #ff0000;
+}
+
 .bg-static-white {
   background-color: #ffffff;
 }
@@ -13041,6 +13045,10 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
   color: #ffffff;
 }
 
+.ReactModal__Content {
+  border: none !important;
+}
+
 .globel--btn {
   max-width: 120px;
   width: 100%;
@@ -13050,11 +13058,39 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
   color: #ffffff;
 }
 
+.highcharts-credits,
+.highcharts-title {
+  display: none;
+}
+
+.chart--view-section {
+  padding: 12px;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  border-radius: 8px;
+}
+.chart--view-section .heading--box {
+  padding: 4px 8px;
+  background-color: #f7f8fc;
+}
+.chart--view-section .heading--box button svg {
+  font-size: 18px;
+}
+
+.theme--table-wrap table thead tr th {
+  background-color: #4bc3ff;
+  font-size: 14px;
+  color: #f2f2f2;
+}
+.theme--table-wrap table tbody tr td {
+  font-size: 14px;
+}
+
 .header--section .navbar {
   background-color: #0c3c60;
 }
 .header--section .dropdown {
   position: relative;
+  margin-left: auto;
 }
 .header--section .dropdown .dropdown-toggle svg {
   width: 28px;
@@ -13199,4 +13235,15 @@ body.swal2-toast-shown .swal2-container.swal2-bottom-end, body.swal2-toast-shown
 }
 .viewer--content p a:hover {
   text-decoration: underline !important;
+}
+
+.task--table tbody tr td {
+  border-bottom: 1px solid #a5a5a5;
+}
+.task--table tbody tr td:nth-child(1) {
+  min-width: 30%;
+  width: 30%;
+}
+.task--table tbody tr td:nth-child(2) {
+  background-color: #f5f5f5;
 }

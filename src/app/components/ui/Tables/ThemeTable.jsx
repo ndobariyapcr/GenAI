@@ -14,7 +14,7 @@ const ThemeTable = ({ columns, data }) => {
 		useResizeColumns
 	);
 	return (
-		<div>
+		<div className="theme--table-wrap">
 			<Table responsive striped className="mb-0 w-100 align-middle" {...getTableProps()}>
 				<thead>
 					{headerGroups.map((headerGroup, index) => {
