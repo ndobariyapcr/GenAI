@@ -1,0 +1,13 @@
+.viewer--content {
+	h1 {
+		font-weight: 500;
+	}
+	p {
+		a {
+			transition: all 0.2s ease-in-out;
+            &:hover{
+                text-decoration: underline !important;
+            }
+		}
+	}
+}

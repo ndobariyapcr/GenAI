@@ -1,0 +1,44 @@
+// ==========> {{ START:: Modal CSS }} <==========
+
+.highcharts-credits {
+	display: none;
+}
+
+.modal--body,
+.modal--footer,
+.help--modal {
+	padding: 12px;
+}
+
+.modal--footer {
+	border-top: 1.5px solid $themeDefaultColor;
+}
+
+.help--modal {
+	h4 {
+		font-weight: 400;
+	}
+
+	button {
+		&:hover {
+			color: $themeWhiteColor;
+		}
+	}
+}
+
+// ==========> {{ END:: Modal CSS }} <==========
+
+// ==========> {{ START:: Button CSS }} <==========
+
+.globel--btn {
+	max-width: 120px;
+	width: 100%;
+
+	// background-color: $themeSeconderyLightColor;
+	&:hover {
+		background-color: $themeSeconderyLightColor;
+		color: $themeWhiteColor;
+	}
+}
+
+// ==========> {{ END:: Button CSS }} <==========
