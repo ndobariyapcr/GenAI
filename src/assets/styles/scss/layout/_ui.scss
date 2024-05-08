@@ -72,16 +72,18 @@
 		thead {
 			tr {
 				th {
-					background-color: #4bc3ff;
-					font-size: $font-14;
-					color: #f2f2f2;
+					padding: 8px 16px;
+					svg{
+						width: 18px;
+						height: 18px;
+					}
 				}
 			}
 		}
 		tbody {
 			tr {
 				td {
-					font-size: $font-14;
+					padding: 8px 16px;
 				}
 			}
 		}

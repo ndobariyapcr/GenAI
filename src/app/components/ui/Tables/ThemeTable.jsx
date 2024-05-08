@@ -22,10 +22,10 @@ const ThemeTable = ({ columns, data }) => {
 							<tr key={index} {...headerGroup.getHeaderGroupProps()}>
 								{headerGroup.headers.map((column, i) => {
 									return (
-										<th key={i} {...column.getHeaderProps(column.getSortByToggleProps())} className="text-start text-capitalize">
+										<th key={i} {...column.getHeaderProps(column.getSortByToggleProps())} className="text-start text-capitalize bg-theme-light-blue font-14 text-white-primary">
 											<div className="d-flex align-items-center justify-content-between">
 												{column.render("Header")}
-												<>{column.isSorted ? column.isSortedDesc ? <Icon icon="bi:sort-up" /> : <Icon icon="bi:sort-down" /> : ""}</>
+												<>{column.isSorted ? column.isSortedDesc ? <Icon icon="bi:sort-up" className="d-block" /> : <Icon icon="bi:sort-down" className="d-block" /> : ""}</>
 											</div>
 										</th>
 									);
@@ -41,7 +41,7 @@ const ThemeTable = ({ columns, data }) => {
 							return (
 								<tr key={i} {...row.getRowProps()}>
 									{row.cells.map((cell, i) => (
-										<td key={i} {...cell.getCellProps()} className="text-start text-capitalize">
+										<td key={i} {...cell.getCellProps()} className="text-start text-capitalize text-static-black font-14">
 											{cell.render("Cell")}
 										</td>
 									))}

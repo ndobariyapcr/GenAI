@@ -1,7 +1,10 @@
 const pageRoutes = {
 	login: "/login",
-	palette_platform: "/",
+	dashboard: "/",
+	palette_platform: "/palette-platform",
 	documents_status: "/documents-status",
+	documents: "/documents",
+	audit_logs:'/audit-logs'
 };
 
 export default pageRoutes;

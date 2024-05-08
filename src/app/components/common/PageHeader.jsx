@@ -15,7 +15,7 @@ const PageHeader = ({ title = "" }) => {
 					<Row className="align-items-center">
 						<Col xxl={6}>
 							<h4 className="mb-0 text-capitalize text-parimary-black font-32">{title}</h4>
-							<p className="mb-0 d-flex align-items-center gap-1 mt-2 font-10 text-secondry-default">
+							{/* <p className="mb-0 d-flex align-items-center gap-1 mt-2 font-10 text-secondry-default">
 								Aggregated data as of April 30, 2024
 								<Link
 									role="button"
@@ -26,15 +26,15 @@ const PageHeader = ({ title = "" }) => {
 								>
 									displayed in EUR
 								</Link>
-							</p>
+							</p> */}
 						</Col>
 						<Col xxl={6}>
-							<div className="d-flex align-items-center justify-content-end border w-25 ms-auto rounded search--box">
+							{/* <div className="d-flex align-items-center justify-content-end border w-25 ms-auto rounded search--box">
 								<Textinput type="text" placeholder="search this site..." className="w-100" inputClass="border-0 shadow-none font-14" />
 								<ReactButton size="sm">
 									<Icon icon="ic:round-search" className="d-block" />
 								</ReactButton>
-							</div>
+							</div> */}
 						</Col>
 					</Row>
 				</div>
