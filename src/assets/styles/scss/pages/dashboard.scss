@@ -38,6 +38,22 @@
 				}
 			}
 		}
+
+		.icon-dropdowns {
+			.dropdown {
+				.dropdown-toggle {
+					outline: none;
+
+					&:focus {
+						border-color: none;
+					}
+
+					&::after {
+						display: none;
+					}
+				}
+			}
+		}
 	}
 
 	.add-new--item {

@@ -59,5 +59,25 @@
                 }
             }
         }
+
+        .table {
+
+            thead,
+            tbody {
+                tr {
+
+                    th {
+                        white-space: nowrap;
+                    }
+                }
+            }
+        }
+    }
+}
+
+.docs-modal {
+    .row {
+        overflow-x: auto;
+        height: 500px;
     }
 }

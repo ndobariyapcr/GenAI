@@ -10,6 +10,7 @@ import { api } from "@/services";
 import { apiConfig } from "@/configs";
 import useMainState from "@/hooks/useMainState";
 import moment from "moment";
+import Dropdowns from "@/components/ui/Dropdowns";
 
 
 const options = {
@@ -180,8 +181,13 @@ export default function DashboardPage() {
 
 	const [state,changeState] = useMainState(
 		{
-			rowCount: 10,
+			top: 40,
+			isLoading:true,
 			columns:[
+				{
+					accessor: "Doc_UID",
+					Header: "Document ID",
+				},
 				{
 					accessor: "Filename",
 					Header: "File name",
@@ -191,24 +197,29 @@ export default function DashboardPage() {
 					Header: "File Type",
 				},
 				{
-					accessor: "ProcessStatus",
-					Header: "Process Status",
+					accessor: "FileURL",
+					Header: "File URL",
 				},
+				{
+					accessor: "EntityName",
+					Header: "Entity Name",
+				},
+				
 				{
 					accessor: "Fund",
 					Header: "Fund name",
 				},
 				{
-					accessor: "AccountType",
-					Header: "Account Type",
-				},
-				{
 					accessor: "ReceivedDate",
-					Header: "Received date",
+					Header: "Date receive - time stamp",
 				},
 				{
-					accessor: "EffectiveDate",
-					Header: "Effective date",
+					accessor: "StatusID",
+					Header: "Current Status",
+				},
+				{
+					accessor: "Completion - time stamp",
+					Header: "Completion - time stamp",
 				},
 			],
 			data: [],
@@ -218,19 +229,22 @@ export default function DashboardPage() {
         return state.data.map((row) => {
             const metadata = JSON.parse(row.Metadata); 
             return {
+                Doc_UID:row.Doc_UID,
                 Filename:row.Filename,
                 Type: row.Type,
-                Fund: metadata?.Fund ,
+                Fund: metadata?.Fund,
                 AccountType:metadata?.Investor,
+                StatusID:metadata?.StatusID,
                 ReceivedDate:moment(metadata?.Timestamp).format('DD-MM-yyyy'),
             };
         });
     }, [state.data]);
 
 	const getDocumentData = () =>{
-		api.get(`${apiConfig.document}?$top=${state.rowCount}`)
+		api.get(`${apiConfig.document}?$top=${state.top}`)
 		.then((response) => {
 			changeState({data:response.value})
+			changeState({isLoading:false})
 		})
 		.catch((err) => {})
 	}
@@ -305,7 +319,11 @@ export default function DashboardPage() {
 										<Icon icon="tabler:plus" className="d-block" /> add new document
 									</ReactButton>
 								</div>
-								<ThemeTable columns={state.columns} data={data} />
+								<ThemeTable 
+									columns={state.columns} 
+									data={data} 
+									isLoading={state.isLoading}
+								/>
 							</Col>
 						</Row>
 					</Card.Body>
