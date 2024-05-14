@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import React, { useEffect, useMemo } from 'react'
 import { Card, Container } from "react-bootstrap";
 import { Icon } from '@iconify/react';
 import ThemeTable from "@/components/ui/Tables/ThemeTable";
@@ -7,17 +7,22 @@ import useMainState from '@/hooks/useMainState';
 import Dropdowns from '@/components/ui/Dropdowns';
 import Nav from 'react-bootstrap/Nav';
 import Swal from 'sweetalert2';
+import ReactButton from '@/components/ui/ReactButton';
+import { api } from '@/services';
+import { apiConfig } from '@/configs';
+import moment from 'moment';
 
 export default function DocumentsPage() {
     const [state, changeState] = useMainState({
         activeTab: "captured-documents",
+        rowCount: 10,
         columns: [
             {
-                accessor: "FileName",
+                accessor: "Filename",
                 Header: "File name",
             },
             {
-                accessor: "FileType",
+                accessor: "Type",
                 Header: "File Type",
             },
             {
@@ -25,7 +30,7 @@ export default function DocumentsPage() {
                 Header: "Process Status",
             },
             {
-                accessor: "FundName",
+                accessor: "Fund",
                 Header: "Fund name",
             },
             {
@@ -49,105 +54,26 @@ export default function DocumentsPage() {
                 Header: "GenAI Score",
             },
         ],
-        data: [
-            {
-                "FileName": "file1.txt",
-                "FileType": "text",
-                "FundName": "Fund Alpha",
-                "AccountType": "Type A",
-                "ReceivedDate": "2024-05-06",
-                "EffectiveDate": "2024-05-10",
-                "ProcessStatus": "In-progress",
-            },
-            {
-                "FileName": "file2.docx",
-                "FileType": "document",
-                "FundName": "Fund Beta",
-                "AccountType": "Type B",
-                "ReceivedDate": "2024-05-07",
-                "EffectiveDate": "2024-05-11",
-                "ProcessStatus": "Processed",
-            },
-            {
-                "FileName": "file3.xlsx",
-                "FileType": "spreadsheet",
-                "FundName": "Fund Gamma",
-                "AccountType": "Type C",
-                "ReceivedDate": "2024-05-08",
-                "EffectiveDate": "2024-05-12",
-                "ProcessStatus": "In-progress",
-            },
-            {
-                "FileName": "file4.jpg",
-                "FileType": "image",
-                "FundName": "Fund Delta",
-                "AccountType": "Type D",
-                "ReceivedDate": "2024-05-09",
-                "EffectiveDate": "2024-05-13",
-                "ProcessStatus": "Pending",
-            },
-            {
-                "FileName": "file5.pdf",
-                "FileType": "pdf",
-                "FundName": "Fund Epsilon",
-                "AccountType": "Type E",
-                "ReceivedDate": "2024-05-10",
-                "EffectiveDate": "2024-05-14",
-                "ProcessStatus": "Processed",
-            },
-            {
-                "FileName": "file6.txt",
-                "FileType": "text",
-                "FundName": "Fund Zeta",
-                "AccountType": "Type Z",
-                "ReceivedDate": "2024-05-11",
-                "EffectiveDate": "2024-05-15",
-                "ProcessStatus": "Pending",
-            },
-            {
-                "FileName": "file7.docx",
-                "FileType": "document",
-                "FundName": "Fund Eta",
-                "AccountType": "Type H",
-                "ReceivedDate": "2024-05-12",
-                "EffectiveDate": "2024-05-16",
-                "ProcessStatus": "Processed",
-            },
-            {
-                "FileName": "file8.xlsx",
-                "FileType": "spreadsheet",
-                "FundName": "Fund Theta",
-                "AccountType": "Type T",
-                "ReceivedDate": "2024-05-13",
-                "EffectiveDate": "2024-05-17",
-                "ProcessStatus": "Pending",
-            },
-            {
-                "FileName": "file9.jpg",
-                "FileType": "image",
-                "FundName": "Fund Iota",
-                "AccountType": "Type I",
-                "ReceivedDate": "2024-05-14",
-                "EffectiveDate": "2024-05-18",
-                "ProcessStatus": "Processed",
-            },
-            {
-                "FileName": "file10.pdf",
-                "FileType": "pdf",
-                "FundName": "Fund Kappa",
-                "AccountType": "Type K",
-                "ReceivedDate": "2024-05-15",
-                "EffectiveDate": "2024-05-19",
-                "ProcessStatus": "Pending",
-            }
-        ],
+        data: [],
         selectedAction: ""
     })
 
     const changeTab = (changedTab) => {
         changeState({ activeTab: changedTab })
     }
-
+    const data = useMemo(() => {
+        return state.data.map((row) => {
+            const metadata = JSON.parse(row.Metadata); 
+            return {
+                Filename:row.Filename,
+                Type: row.Type,
+                Fund: metadata?.Fund ,
+                AccountType:metadata?.Investor,
+                ReceivedDate:moment(metadata?.Timestamp).format('DD-MM-yyyy'),
+            };
+        });
+    }, [state.data]);
+    
     const columns = useMemo(() => {
         let _columns = [...state.columns]
 
@@ -218,6 +144,21 @@ export default function DocumentsPage() {
         })
     }, [state.activeTab, state.selectedAction, state.selectedGenAIScore])
 
+
+    const getDocumentData = () =>{
+		// &$filter=StatusID eq '${state.filter}'
+		api.get(`${apiConfig.document}?$top=${state.rowCount}`)
+		.then((response) => {
+			changeState({data:response.value})
+		})
+		.catch((err) => {})
+	}                          
+	
+	useEffect(()=>{
+		getDocumentData();
+	},[])
+
+
     const onUserFeedback = (value) => {
         Swal.fire({
             title: "Allow user feedback?",
@@ -247,8 +188,13 @@ export default function DocumentsPage() {
                                 <Nav.Link eventKey="ignored-documents" className="font-14 text-capitalize">Ignored for ingestion documents</Nav.Link>
                             </Nav.Item>
                         </Nav>
-                        <div className="mt-4">
-                            <ThemeTable columns={columns} data={state.data} />
+                        <div className='d-flex align-items-center justify-content-end mt-3'>
+                        <ReactButton size="sm" className="d-flex align-items-center gap-2 border-0 font-14 download--btn" onClick={() => {}}>
+                            <Icon icon="material-symbols:download" className="d-block" /> download
+						</ReactButton>
+                        </div>
+                        <div className="mt-3">
+                        <ThemeTable columns={columns} data={data} />
                         </div>
                     </Card.Body>
                 </Card>
