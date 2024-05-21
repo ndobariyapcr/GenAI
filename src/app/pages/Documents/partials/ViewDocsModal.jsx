@@ -147,14 +147,12 @@ const ViewDocsModal = ({ isOpen, onClose, Filename, data, setState }) => {
   //   };
 
   const onJsonChange = (key, parent, type, data) => {
-    console.log(data);
     const newJson = data;
 
     changeState({ jsonUpdateData: newJson });
   };
 
   const saveJson = () => {
-    console.log(Filename, state.jsonUpdateData);
     api
       .post(
         `http://40.87.56.22:8001/updatejson/?filename=${Filename}`,
